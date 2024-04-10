@@ -15,19 +15,25 @@ function checkInput(e){
     let outputLast = document.querySelector("#outputLast");
     let outputCurrent = document.querySelector("#outputCurrent");
     
-    if (operations.includes(input)){
-        outputLast.innerHTML = num1 + ' <i class="fs-5 fa-solid fa-'+input+'"></i> ';
-        secondNum = true;
+    if (operations.includes(input)){    // OPERATIONS
+        if (num2 !== ''){
+            doOperation();
+            outputLast.innerHTML = result + ' <i class="fs-5 fa-solid fa-'+operation+'"></i> ';
+            outputCurrent.innerHTML = result;
+            num1 = result;
+        } else {
+            outputLast.innerHTML = num1 + ' <i class="fs-5 fa-solid fa-'+input+'"></i> ';
+        }
         num2 = '';
+        secondNum = true;
         operation = input;
-    } else if (input == 'equals'){
-        console.log(num1 +" "+ num2);
+    } else if (input == 'equals'){      // RESOLVE OPERATION
         doOperation();
         outputCurrent.textContent = result;
         outputLast.innerHTML = num1 + ' <i class="fs-5 fa-solid fa-'+operation+'"></i> '+num2 + ' <i class="fs-5 fa-solid fa-equals"></i>';
         num2 = '';
         num1 = result;
-    } else {
+    } else {                            // NUMBER
         if (secondNum){
             if (outputCurrent.textContent == num1){
                 outputCurrent.textContent = '';
@@ -39,9 +45,9 @@ function checkInput(e){
             num1 == 0 ? num1 = input : num1 += input;
             outputCurrent.textContent = num1;
         }
-
     } 
 
+    console.log(num1+' '+num2+' '+result+' '+operation);
     
     // lastInput = input;
 }
