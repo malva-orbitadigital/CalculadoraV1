@@ -1,11 +1,11 @@
 
 let operation = '';
-let lastInput = '';
+// let lastInput = '';
+let secondNum = false;
 let num1 = 0;
 let num2 = '';
 let result = '';
 let operations = ['plus', 'minus', 'xmark', 'divide'];
-//<i class="fa-solid fa-"></i>
 
 
 document.querySelectorAll(".btn").forEach((n) => n.addEventListener("click", checkInput));
@@ -16,27 +16,34 @@ function checkInput(e){
     let outputCurrent = document.querySelector("#outputCurrent");
     
     if (operations.includes(input)){
-        outputLast.innerHTML = num1 + ' <i class="fs-5 fa-solid fa-'+input+'"></i>';
-
+        outputLast.innerHTML = num1 + ' <i class="fs-5 fa-solid fa-'+input+'"></i> ';
+        secondNum = true;
+        num2 = '';
         operation = input;
     } else if (input == 'equals'){
-        console.log(result);
+        console.log(num1 +" "+ num2);
+        doOperation();
         outputCurrent.textContent = result;
         outputLast.innerHTML = num1 + ' <i class="fs-5 fa-solid fa-'+operation+'"></i> '+num2 + ' <i class="fs-5 fa-solid fa-equals"></i>';
+        num2 = '';
+        num1 = result;
     } else {
-        if (operations.includes(lastInput)){
-            num2 = input;
-            doOperation();
+        if (secondNum){
+            if (outputCurrent.textContent == num1){
+                outputCurrent.textContent = '';
+            }
+            num2 += input;
+            outputCurrent.textContent = num2;
+            outputLast.innerHTML += input;
         } else {
-            num1 = input;
-            outputLast.textContent = input;
+            num1 == 0 ? num1 = input : num1 += input;
+            outputCurrent.textContent = num1;
         }
 
-        outputCurrent.textContent = input;
     } 
 
     
-    lastInput = input;
+    // lastInput = input;
 }
 
 function doOperation(){
